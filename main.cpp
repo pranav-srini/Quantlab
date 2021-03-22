@@ -17,8 +17,6 @@
 
 
 
-
-
 #include <iostream>     
 #include <tuple>   
 #include <vector>
@@ -33,12 +31,13 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
 	//Inital format spacing
-	cout << "" << endl;
-	cout << "" << endl;
-	cout << "" << endl;
+	// cout << "" << endl;
+	// cout << "" << endl;
+	// cout << "" << endl;
 
-    vector< vector<string> > data_vector = file_to_data("input.csv"); 
+    vector< vector<string> > data_vector = file_to_data("input.csv"); //convert csv to vector
 
+    //Code to print vector
     // for(auto list: data_vector) {
     //     for(auto word: list) {
     //         cout << word << " ";
@@ -54,8 +53,10 @@ int main(int argc, const char * argv[]) {
     map< string, vector<int> > stockMap;
 
 
+    //iterate throught data vector 
     for (int i = 0; i < (int)data_vector.size(); i++) {
-        if (stockMap.count(data_vector[i][1]) != 1) {
+        //cout << stockMap.count(data_vector[i][1]) << endl;
+        if (stockMap.count(data_vector[i][1]) == 0) { //check if first occurences
             vector<int> listStock;
             listStock.push_back(stoi(data_vector[i][2]));
             listStock.push_back(stoi(data_vector[i][3])*stoi(data_vector[i][2]));
@@ -67,19 +68,24 @@ int main(int argc, const char * argv[]) {
             stockMap[data_vector[i][1]] = listStock;
         } else {
 
-            stockMap[data_vector[i][1]][0] += stoi(data_vector[i][2]);
-            stockMap[data_vector[i][1]][1] += stoi(data_vector[i][3])*stoi(data_vector[i][2]);
+            //cout << "here" << endl;
+            // if (data_vector[i][1] == "aaa") {
+            //     cout << stockMap[data_vector[i][1]][4] << endl;
+            // }
+            stockMap[data_vector[i][1]][0] += stoi(data_vector[i][2]); // number of trades 
+            stockMap[data_vector[i][1]][1] += stoi(data_vector[i][3])*stoi(data_vector[i][2]); // value of trades
 
-            if (stoi(data_vector[i][3]) > stockMap[data_vector[i][1]][2]) {
+            if (stoi(data_vector[i][3]) > stockMap[data_vector[i][1]][2]) { // max trade price
                 stockMap[data_vector[i][1]][2] = stoi(data_vector[i][3]);
             }
 
-            stockMap[data_vector[i][1]][3] = stol(data_vector[i][0]);
-
-            if (stol(data_vector[i][3]) - stockMap[data_vector[i][1]][3] > stockMap[data_vector[i][1]][4]) {
-                stockMap[data_vector[i][1]][4] = stol(data_vector[i][3]) - stockMap[data_vector[i][1]][3];
+            if ((stol(data_vector[i][0]) - stockMap[data_vector[i][1]][3]) > stockMap[data_vector[i][1]][4]) { //difference in time 
+                stockMap[data_vector[i][1]][4] = (stol(data_vector[i][0]) - stockMap[data_vector[i][1]][3]);
             }
-            //stockMap[data_vector[i][1]] = {stoi(data_vector[i][1]), stoi(data_vector[i][2]), stoi(data_vector[i][2]), stoi(data_vector[i][0]), 0)};
+
+            stockMap[data_vector[i][1]][3] = stol(data_vector[i][0]); // current time
+
+
         }
     }
 
