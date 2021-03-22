@@ -1,8 +1,7 @@
 # Quantlab
-Quantlab Project
-Pranav Srinivasan
 
- Quantlab Take Home Assignment
+Pranav Srinivasan
+Quantlab Take Home Assignment
 
 This code takes in an input file in the form of a csv called input.csv. This input
 represents stock trades and is of the form (time, symbol, quantity price). Using this data
